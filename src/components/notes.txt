@@ -1,0 +1,16 @@
+Class Components 
+
+- Constructor houses props and initial this.state, sets this.props to props so they are available throughout the class
+- Requires you to extend from React.Component and create a render function to return the React element
+- Functional components are 'stateless', can't use setState()
+- Need a class component or parent component that is a class component to have state/pass it via props
+- Lifecycle hooks and state both come from React.Component
+    ~ Render() <-- Required method, renders React JSX, called on the initial component mount and when the component updates 
+    ~ ComponentWillMount() <-- Depreciated in 2018 for not playing well with async rendering; used to perform state changes needed before initial render, invoked immediately before mounting occurs(before render) thus setting state will not cause a re-render
+    ~ ComponentDidMount() <-- Only called when component "mounts" on initial render, runs after the component output has been rendered to the DOM; best place to make fetch calls, only called on the client,state has to be defined properly to work in didMount to avoid undefined state errors or infinite loops if state changes take place(causes re-render and thus didMount)
+    ~ ComponentDidUpdate(prevProps, prevState, snapshot) <-- Called when component is used/updated (counter, button click, etc)
+    ~ ComponentWillUnmount() <--Called when component is removed from the DOM, "hidden" from it
+
+
+
+Typescript
