@@ -11,6 +11,4 @@ Class Components
     ~ ComponentDidUpdate(prevProps, prevState, snapshot) <-- Called when component is used/updated (counter, button click, etc)
     ~ ComponentWillUnmount() <--Called when component is removed from the DOM, "hidden" from it
 
-
-
 Typescript
