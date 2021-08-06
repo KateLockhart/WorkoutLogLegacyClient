@@ -28,26 +28,39 @@ export default class App extends React.Component<AppProps, AppState> {
     };
   }
 
-  // give definition
+  // give definition/use case
   componentWillMount() {
     console.log('')
   }
 
-  // give definition
+  // give definition/use case
   componentDidMount() {
 
   }
 
   // make update token(setting the token) logic
+  // const updateToken = (newToken) => {
+  //   localStorage.setItem('token', newToken);
+  //   setSessionToken(newToken);
+  //   console.log(sessionToken);
+  // }
 
   // make clearing token logic
+  // const clearToken = () => {
+  //   localStorage.clear();
+  //   setSessionToken('');
+  // }
 
   // make the logic for the protected view(auth vs workouts) and call in return
-
+  // const protectedViews = () => {
+  //   return (sessionToken === localStorage.getItem('token') ? <WorkoutIndex token={sessionToken} />
+  //   : <Auth updateToken={updateToken} />)
+  // }
 
   render() {
     return (
       <div className="App">
+        {/* SiteBar(needs to pass clear token logic for button) and protected views should be only contents of App.tsx div */}
         <SiteBar />
         <Auth />
       </div>
