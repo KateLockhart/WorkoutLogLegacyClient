@@ -1,70 +1,65 @@
-import React from 'react';
-import './App.css';
-import SiteBar from './home/Navbar';
-import Auth from './components/auth/Auth';
-
-type AppProps = {
-  password: string;
-  username: string;
-  token: string;
-};
+import React, { Component } from 'react'
+import './App.css'
+import SiteBar from './home/Navbar'
+import Auth from './components/auth/Auth'
 
 type AppState = {
-  setPassword: string;
-  setUsername: string;
-  setToken: string;
-};
+  token: string
+}
 
-//  Using TS with Legacy, React.Component takes in three generic types(can view w/ tooltip), but we focus on the first two:
-//  React.Component<P , S> where P is for prop types and S is for state types
+// Using TS with Legacy, React.Component takes in three generic types(can view w/ tooltip), but we focus on the first two:
+// React.Component<P , S> where P is for prop types and S is for state types
 
-export default class App extends React.Component<AppProps, AppState> {
-  constructor(props: AppProps){
-    super(props);
+export default class App extends Component<{}, AppState> {
+  constructor(props: {}) {
+    super(props)
     this.state = {
-      setPassword: '',
-      setUsername: '',
-      setToken: '',
-    };
+      token: '',
+    }
   }
+  // no need for binding if fns are arrow fns
+  // will need to bind if using regular fns
 
-  // give definition/use case
-  componentWillMount() {
-    console.log('')
-  }
-
+  // componentWillMount is deprecated (use didMount instead)
   // give definition/use case
   componentDidMount() {
-
+    if (localStorage.getItem('token')) {
+      this.setState({
+        // ! is a non-null assertion expression operator (TS)
+        token: localStorage.getItem('token')!,
+      })
+    }
+    console.log(this.state.token)
   }
 
-  // make update token(setting the token) logic
-  // const updateToken = (newToken) => {
-  //   localStorage.setItem('token', newToken);
-  //   setSessionToken(newToken);
-  //   console.log(sessionToken);
-  // }
+  updateToken = (newToken: string) => {
+    localStorage.setItem('token', newToken)
+    this.setState({ token: newToken })
+    console.log(this.state.token)
+  }
 
-  // make clearing token logic
-  // const clearToken = () => {
-  //   localStorage.clear();
-  //   setSessionToken('');
-  // }
+  clearToken = () => {
+    localStorage.clear()
+    this.setState({ token: '' })
+  }
 
-  // make the logic for the protected view(auth vs workouts) and call in return
-  // const protectedViews = () => {
-  //   return (sessionToken === localStorage.getItem('token') ? <WorkoutIndex token={sessionToken} />
-  //   : <Auth updateToken={updateToken} />)
+  // ADD IN ONCE WORKOUTINDEX IS ADDED
+
+  // protectedViews = () => {
+  //   return this.state.token === localStorage.getItem('token') ? (
+  //     <WorkoutIndex token={this.state.token} />
+  //   ) : (
+  //     <Auth updateToken={this.updateToken} />
+  //   )
   // }
 
   render() {
     return (
-      <div className="App">
-        {/* SiteBar(needs to pass clear token logic for button) and protected views should be only contents of App.tsx div */}
-        <SiteBar />
-        <Auth />
+      <div className='App'>
+        <SiteBar clickLogout={this.clearToken} />
+        <Auth updateToken={this.updateToken} />
+        {/* {this.protectedViews()} */}
       </div>
-    );
+    )
   }
-
 }
