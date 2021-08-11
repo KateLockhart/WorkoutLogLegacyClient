@@ -1,37 +1,48 @@
-import React from 'react';
+import React, { Component } from 'react'
 import {
-    Navbar,
-    NavbarBrand,
-    NavbarToggler,
-    Nav,
-    NavItem,
-    Button,
-    Collapse
-} from 'reactstrap';
+  Navbar,
+  NavbarBrand,
+  NavbarToggler,
+  Nav,
+  NavItem,
+  Button,
+  Collapse,
+} from 'reactstrap'
 
-export default class Sitebar extends React.Component {
-    // Need to construct and implement constructor with props and such as well as pass props to component
+type Props = {
+  clickLogout: () => void
+}
 
-    toggle = () => {
-        // let newIsOpen = !isOpen;
-        // setIsOpen(newIsOpen);
+interface NavbarState {
+  isOpen: boolean
+}
+
+export default class Sitebar extends Component<Props, NavbarState> {
+  constructor(props: Props) {
+    super(props)
+    this.state = {
+      isOpen: false,
     }
+  }
 
-    render() {
-        return (
-            <Navbar color="faded" light expand="md">
-            <NavbarBrand href="/">Workout Log</NavbarBrand>
-            <NavbarToggler onClick={this.toggle} />
-            {/*Collapse needs the isOpen={isOpen} functionality but with this. */}
-            <Collapse navbar>
-                <Nav className="ml-auto" navbar>
-                    <NavItem>
-                        {/* Button needs onClick={this.props.clickLogout} logic once named/typed/passed from App.tsx */}
-                        <Button >Logout</Button>
-                    </NavItem>
-                </Nav>
-            </Collapse>
-        </Navbar>
-        );
-    };
-};
+  toggle = () => {
+    let newIsOpen = !this.state.isOpen
+    this.setState({ isOpen: newIsOpen })
+  }
+
+  render() {
+    return (
+      <Navbar color='faded' light expand='md'>
+        <NavbarBrand href='/'>Workout Log</NavbarBrand>
+        <NavbarToggler onClick={this.toggle} />
+        <Collapse isOpen={this.state.isOpen} navbar>
+          <Nav className='ml-auto' navbar>
+            <NavItem>
+              <Button onClick={this.props.clickLogout}>Logout</Button>
+            </NavItem>
+          </Nav>
+        </Collapse>
+      </Navbar>
+    )
+  }
+}

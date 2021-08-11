@@ -1,25 +1,28 @@
-import React from 'react';
-import Login from './Login';
-import SignUp from './Signup';
-import {
-    Container,
-    Row,
-    Col
-} from 'reactstrap';
+import React, { Component } from 'react'
+import Login from './Login'
+import Signup from './Signup'
+import { Container, Row, Col } from 'reactstrap'
 
-export default class Auth extends React.Component {
-    render() {
-        return(
-            <Container className='auth-container'>
-                <Row>
-                    <Col md='6'>
-                        <SignUp />
-                    </Col>
-                    <Col md='6' className='login-col'>
-                        <Login />
-                    </Col>
-                </Row>
-            </Container>
-        )
-    }
+type Props = {
+  updateToken: (newToken: string) => void
+}
+export default class Auth extends Component<Props, {}> {
+  constructor(props: Props) {
+    super(props)
+  }
+
+  render() {
+    return (
+      <Container>
+        <Row>
+          <Col md='6' className='auth-container'>
+            <Signup updateToken={this.props.updateToken} />
+          </Col>
+          <Col md='6' className='login-col'>
+            <Login updateToken={this.props.updateToken} />
+          </Col>
+        </Row>
+      </Container>
+    )
+  }
 }
